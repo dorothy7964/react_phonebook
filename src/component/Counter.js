@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 
+const Problematic = () => {
+  throw (new Error('버그가 나타났다!'));
+  return (
+    <div>
+
+    </div>
+  );
+};
+
 class Counter extends Component {
   state = {
     number: 0
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({
+      error: true
+    });
   }
 
   constructor(props) {
@@ -41,7 +56,7 @@ class Counter extends Component {
   componentDidUpdate(prevProps, prevState) {
     // 이 API는 컴포넌트에서 render() 를 호출하고난 다음에 발생하게 됩니다.
     // 이 시점에선 this.props 와 this.state 가 바뀌어있습니다.
-    // 그리고 파라미터를 통해 이전의 값인 prevProps 와 prevState 를 조회 할 수 있습니다. 
+    // 그리고 파라미터를 통해 이전의 값인 prevProps 와 prevState 를 조회 할 수 있습니다.
     // 그리고, getSnapshotBeforeUpdate 에서 반환한 snapshot 값은 세번째 값으로 받아옵니다.
     console.log('componentDidUpdate');
   }
@@ -64,10 +79,12 @@ class Counter extends Component {
 
   render() {
     console.log('render');
+    if (this.state.error) return (<h1>에러발생!</h1>);
     return (
       <div>
         <h1>카운터</h1>
         <div>값: {this.state.number}</div>
+        { this.state.number === 4 && <Problematic /> }
         <button onClick={this.handleIncrease}>+</button>
         <button onClick={this.handleDecrease}>-</button>
       </div>
