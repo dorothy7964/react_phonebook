@@ -8,6 +8,11 @@ class PhoneInfoList extends Component {
     onUpdate: () => console.warn('onUpdate not defined'),
   }
 
+  // 자동완성 : scu6(작성) + (ctrl + spaceBar)
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.data !== this.props.data;
+  }
+
   render() {
     console.log('render PhoneInfoList');
     const { data, onRemove, onUpdate } = this.props;
