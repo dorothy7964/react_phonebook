@@ -25,7 +25,7 @@ class PhoneInfo extends Component {
     if (!this.state.editing
       && !nextState.editing
       && nextProps.info === this.props.info) {
-    return false;
+      return false;
     }
     // 나머지 경우엔 리렌더링함
     return true;
